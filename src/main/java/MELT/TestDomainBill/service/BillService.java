@@ -31,4 +31,12 @@ public class BillService {
             return false;
         }
     }
+
+    public boolean createBillV2(Long itemId) {
+        if (itemId == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

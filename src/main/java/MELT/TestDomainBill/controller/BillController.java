@@ -11,9 +11,7 @@ import MELT.TestDomainBill.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bill")
@@ -23,11 +21,25 @@ public class BillController {
     private final BillService billService;
 
     @PutMapping("/createBill")
-    public ResponseEntity<Boolean> createBill() {
+    public ResponseEntity<String> createBill() {
         if (billService.createBill()) {
-            return new ResponseEntity<Boolean>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 상품 ID에 따라 다른 결제 결과를 반환한다.
+     * @param id : 상품 ID
+     * @return : ResponseEntity
+     */
+    @GetMapping("/createBill/{id}")
+    public ResponseEntity<String> createBillV2(@PathVariable Long id) {
+        if (billService.createBillV2(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
